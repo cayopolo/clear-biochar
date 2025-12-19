@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submission Rejected</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #2c5f2d 0%, #97bc62 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .result-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 60px 40px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        .badge {
+            display: inline-block;
+            background-color: #f44336;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #333;
+            font-size: 42px;
+            margin-bottom: 30px;
+        }
+        .description {
+            color: #666;
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .button {
+            padding: 15px 40px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .primary-button {
+            background: linear-gradient(135deg, #2c5f2d 0%, #97bc62 100%);
+            color: white;
+        }
+        .primary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(44, 95, 45, 0.4);
+        }
+        .secondary-button {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .secondary-button:hover {
+            background-color: #e0e0e0;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="result-container">
+        <div class="badge">REJECTED</div>
+        <h1>Submission Rejected</h1>
+        <p class="description">
+            The meta-analysis submission does not meet the required criteria.
+            Please review the guidelines and ensure all checklist items are properly addressed
+            before resubmitting.
+        </p>
+        <div class="action-buttons">
+            <a href="{{ url_for('start_workflow') }}" class="button primary-button">Start Over</a>
+            <a href="{{ url_for('home') }}" class="button secondary-button">Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

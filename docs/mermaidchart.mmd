@@ -1,0 +1,61 @@
+flowchart TD
+    Start[Is the MA topic on biochar<br/>application to soils?]
+    CheckAnnex{Annex II basic<br/>checklist is<br/>complete}
+    Reject[Reject]
+    ProceedReview[Proceed review]
+    SelectHypothesis([Select<br/>main<br/>hypothesis])
+
+    SoilBiology{Soil biology}
+    SoilStructure{Soil structure}
+    SoilRemediation{Soil<br/>remediation}
+    GHGs{GHGs}
+    PlantGrowth{Plant growth}
+
+    ApplyVII[Apply checklist<br/>in Annex VII]
+    ApplyVI[Apply checklist<br/>in Annex VI]
+    ApplyV[Apply checklist<br/>in Annex V]
+    ApplyIV[Apply checklist<br/>in Annex IV]
+    ApplyIII[Apply checklist<br/>in Annex III]
+
+    CheckVII{Annex VII<br/>checklist is<br/>complete}
+    CheckVI{Annex VI<br/>checklist is<br/>complete}
+    CheckV{Annex V<br/>checklist is<br/>complete}
+    CheckIV{Annex IV<br/>checklist is<br/>complete}
+    CheckIII{Annex III<br/>checklist is<br/>complete}
+
+    Start -->|False| Reject
+    Start --> CheckAnnex
+    CheckAnnex -->|False| Reject
+    CheckAnnex -->|True| SelectHypothesis
+
+    SelectHypothesis --> SoilBiology
+    SelectHypothesis --> SoilStructure
+    SelectHypothesis --> SoilRemediation
+    SelectHypothesis --> GHGs
+    SelectHypothesis --> PlantGrowth
+
+    SoilBiology --> ApplyVII
+    SoilStructure --> ApplyVI
+    SoilRemediation --> ApplyV
+    GHGs --> ApplyIV
+    PlantGrowth --> ApplyIII
+
+    ApplyVII --> CheckVII
+    ApplyVI --> CheckVI
+    ApplyV --> CheckV
+    ApplyIV --> CheckIV
+    ApplyIII --> CheckIII
+
+    CheckVII -->|True| ProceedReview
+    CheckVI -->|True| ProceedReview
+    CheckV -->|True| ProceedReview
+    CheckIV -->|True| ProceedReview
+    CheckIII -->|True| ProceedReview
+
+    CheckVII -->|False| Reject
+    CheckVI -->|False| Reject
+    CheckV -->|False| Reject
+    CheckIV -->|False| Reject
+    CheckIII -->|False| Reject
+
+    Reject --> Start

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Biochar MA Review Workflow</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #2c5f2d 0%, #97bc62 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+        .flowchart-container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+        .start-button {
+            display: block;
+            margin: 30px auto;
+            padding: 15px 60px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #2c5f2d 0%, #97bc62 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .start-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        .info {
+            text-align: center;
+            color: #666;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Biochar Meta-Analysis Review Workflow</h1>
+        <p class="subtitle">
+            Interactive workflow for reviewing meta-analysis submissions on biochar application to soils
+        </p>
+
+        <div class="flowchart-container">
+            <h3 style="color: #333; margin-top: 0;">Workflow Diagram</h3>
+            {{ flowchart_svg|safe }}
+        </div>
+
+        <a href="{{ url_for('start_workflow') }}" class="start-button">Begin Review Process</a>
+
+        <p class="info">
+            This workflow guides you through the systematic review process for biochar meta-analysis,
+            including checklist verification and hypothesis-specific evaluations.
+        </p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #2c5f2d 0%, #97bc62 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .question-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 60px 40px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 50px;
+            line-height: 1.4;
+        }
+        .button-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .answer-button {
+            padding: 20px 50px;
+            font-size: 24px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .yes-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .yes-button:hover {
+            background-color: #45a049;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+        .no-button {
+            background-color: #f44336;
+            color: white;
+        }
+        .no-button:hover {
+            background-color: #da190b;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
+        }
+        .home-link {
+            margin-top: 30px;
+            display: block;
+            color: #2c5f2d;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .home-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="question-container">
+        <h1>{{ question }}</h1>
+        <div class="button-container">
+            <a href="{{ yes_url }}" class="answer-button yes-button">Yes</a>
+            <a href="{{ no_url }}" class="answer-button no-button">No</a>
+        </div>
+        <a href="{{ url_for('home') }}" class="home-link">← Back to Home</a>
+    </div>
+</body>
+</html>
