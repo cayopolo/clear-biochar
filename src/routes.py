@@ -1,7 +1,39 @@
+import csv
+from pathlib import Path
+
 from flask import Flask, Response, redirect, render_template, url_for
 
 from .config import ANNEXES, HYPOTHESES
 from .flowchart import create_biochar_flowchart
+
+
+def load_annex_table(annex_id: str) -> tuple[list[dict], list[str]]:
+    """Load and parse an Annex CSV file.
+
+    Args:
+        annex_id: The annex identifier (e.g., "II", "III", "IV", etc.)
+
+    Returns:
+        Tuple of (rows, cleaned_column_names)
+    """
+    csv_path = Path(__file__).parent.parent / "annex_data" / f"annex{annex_id}.csv"
+    rows = []
+    with csv_path.open("r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        # Get original headers
+        original_headers = reader.fieldnames or []
+        # Clean headers: remove BOM, non-breaking spaces, etc.
+        cleaned_headers = [h.replace("\ufeff", "").replace("\xa0", "").replace("\u202f", "").strip() for h in original_headers]
+
+        # Read rows with cleaned headers
+        for row in reader:
+            cleaned_row = {}
+            for old_key, new_key in zip(original_headers, cleaned_headers, strict=True):
+                value = row.get(old_key, "").replace("\xa0", "").replace("\u202f", "").strip()
+                cleaned_row[new_key] = value
+            rows.append(cleaned_row)
+
+    return rows, cleaned_headers
 
 
 def init_app(app: Flask) -> None:
@@ -28,12 +60,15 @@ def init_app(app: Flask) -> None:
 
     @app.route("/step/annex-ii-check")
     def annex_ii_check() -> str:
+        table_data, column_names = load_annex_table("II")
         return render_template(
-            "binary_question.html",
+            "annex_check.html",
             title="Annex II Check",
             question="Is the Annex II basic checklist complete?",
             yes_url=url_for("select_hypothesis"),
             no_url=url_for("reject"),
+            table_data=table_data,
+            column_names=column_names,
         )
 
     @app.route("/step/select-hypothesis")
@@ -54,12 +89,15 @@ def init_app(app: Flask) -> None:
         if annex_id not in ANNEXES:
             return redirect(url_for("home"))
 
+        table_data, column_names = load_annex_table(annex_id)
         return render_template(
-            "binary_question.html",
+            "annex_check.html",
             title=f"Annex {annex_id} Check",
             question=f"Is the Annex {annex_id} checklist complete?",
             yes_url=url_for("proceed_review"),
             no_url=url_for("reject"),
+            table_data=table_data,
+            column_names=column_names,
         )
 
     @app.route("/result/reject")
