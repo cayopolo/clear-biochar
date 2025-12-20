@@ -1,78 +1,54 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Select Hypothesis</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: linear-gradient(135deg, #2c5f2d 0%, #97bc62 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .selection-container {
-            background-color: white;
-            border-radius: 12px;
-            padding: 60px 40px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-            max-width: 700px;
-            width: 100%;
-            text-align: center;
-        }
-        h1 {
-            color: #333;
-            font-size: 32px;
-            margin-bottom: 40px;
-        }
-        .options-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        .hypothesis-button {
-            padding: 25px 20px;
-            font-size: 18px;
-            font-weight: bold;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-decoration: none;
-            display: block;
-            color: #333;
-        }
-        .hypothesis-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-        }
-        .home-link {
-            display: block;
-            color: #2c5f2d;
-            text-decoration: none;
-            font-size: 14px;
-        }
-        .home-link:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <div class="selection-container">
-        <h1>Select Main Hypothesis</h1>
-        <div class="options-container">
-            {% for hyp in hypotheses %}
-            <a href="{{ url_for('apply_annex', annex_id=hyp.annex) }}"
-               class="hypothesis-button"
-               style="background-color: {{ colors[hyp.annex] }};">
-                {{ hyp.label }}
-            </a>
-            {% endfor %}
-        </div>
-        <a href="{{ url_for('home') }}" class="home-link">← Back to Home</a>
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block extra_styles %}
+.hypothesis-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 60px 40px;
+}
+.hypothesis-container h1 {
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.options-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+.hypothesis-button {
+    padding: 25px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    display: block;
+    color: #333;
+    text-align: center;
+}
+.hypothesis-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+{% endblock %}
+
+{% block content %}
+<div class="content-container centered hypothesis-container">
+    <h1>Select Main Hypothesis</h1>
+    <div class="options-container">
+        {% for hyp in hypotheses %}
+        <a href="{{ url_for('apply_annex', annex_id=hyp.annex) }}"
+           class="hypothesis-button"
+           style="background-color: {{ colors[hyp.annex] }};">
+            {{ hyp.label }}
+        </a>
+        {% endfor %}
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

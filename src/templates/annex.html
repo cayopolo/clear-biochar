@@ -1,79 +1,41 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Apply Annex {{ annex_id }}</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: linear-gradient(135deg, #2c5f2d 0%, #97bc62 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .info-container {
-            background-color: white;
-            border-radius: 12px;
-            padding: 60px 40px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-        }
-        .badge {
-            display: inline-block;
-            background-color: {{ color }};
-            color: #333;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        h1 {
-            color: #333;
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-        .description {
-            color: #666;
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 40px;
-        }
-        .continue-button {
-            padding: 15px 50px;
-            font-size: 18px;
-            font-weight: bold;
-            color: white;
-            background: linear-gradient(135deg, #2c5f2d 0%, #97bc62 100%);
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .continue-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-    </style>
-</head>
-<body>
-    <div class="info-container">
-        <div class="badge">Annex {{ annex_id }}</div>
-        <h1>Apply Checklist in Annex {{ annex_id }}</h1>
-        <p class="description">
-            Please review and apply the checklist criteria outlined in Annex {{ annex_id }}
-            for evaluating {{ hypothesis }} in your meta-analysis.
-            Ensure all required items are addressed before proceeding.
-        </p>
-        <a href="{{ url_for('check_annex', annex_id=annex_id) }}" class="continue-button">
-            Continue to Verification
-        </a>
-    </div>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block extra_styles %}
+.annex-info-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 60px 40px;
+}
+.annex-badge {
+    display: inline-block;
+    background-color: {{ color }};
+    color: #333;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.annex-info-container h1 {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+{% endblock %}
+
+{% block content %}
+<div class="content-container centered annex-info-container">
+    <div class="annex-badge">Annex {{ annex_id }} - {{ hypothesis }}</div>
+    <h1>Apply Checklist in Annex {{ annex_id }}</h1>
+    <p class="description">
+        Please review and apply the checklist criteria outlined in Annex {{ annex_id }}
+        for evaluating <strong>{{ hypothesis }}</strong> in your meta-analysis.
+        Ensure all required items are addressed before proceeding.
+    </p>
+    <a href="{{ url_for('check_annex', annex_id=annex_id) }}" class="primary-button">
+        Continue to Verification
+    </a>
+</div>
+{% endblock %}

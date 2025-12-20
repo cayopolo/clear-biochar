@@ -3,6 +3,9 @@
 <head>
     <title>Biochar MA Review Workflow</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             font-family: Arial, sans-serif;
             max-width: 1200px;
@@ -36,10 +39,16 @@
             text-align: center;
             overflow-x: auto;
         }
+        .flowchart-container h3 {
+            color: #333;
+            margin-top: 0;
+        }
         .start-button {
-            display: block;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             margin: 30px auto;
-            padding: 15px 60px;
+            padding: 18px 60px;
             font-size: 20px;
             font-weight: bold;
             color: white;
@@ -54,11 +63,15 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
+        .button-wrapper {
+            text-align: center;
+        }
         .info {
             text-align: center;
             color: #666;
             margin-top: 20px;
             font-size: 14px;
+            line-height: 1.6;
         }
     </style>
 </head>
@@ -70,11 +83,15 @@
         </p>
 
         <div class="flowchart-container">
-            <h3 style="color: #333; margin-top: 0;">Workflow Diagram</h3>
+            <h3>Workflow Diagram</h3>
             {{ flowchart_svg|safe }}
         </div>
 
-        <a href="{{ url_for('start_workflow') }}" class="start-button">Begin Review Process</a>
+        <div class="button-wrapper">
+            <a href="{{ url_for('start_workflow') }}" class="start-button">
+                <span>&#9654;</span> Begin Review Process
+            </a>
+        </div>
 
         <p class="info">
             This workflow guides you through the systematic review process for biochar meta-analysis,

@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block extra_styles %}
+.summary-container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+.summary-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.summary-header h1 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 10px;
+}
+.summary-header p {
+    color: #666;
+    font-size: 16px;
+}
+.summary-list {
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 40px;
+}
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+.summary-item:last-child {
+    border-bottom: none;
+}
+.summary-item-label {
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.summary-item-value {
+    color: #666;
+    text-align: right;
+}
+.check-icon {
+    color: #4CAF50;
+    font-size: 20px;
+}
+.summary-actions {
+    text-align: center;
+}
+.summary-actions p {
+    color: #666;
+    margin-bottom: 25px;
+    font-size: 16px;
+}
+.approve-button {
+    padding: 18px 60px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.approve-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+}
+{% endblock %}
+
+{% block content %}
+<div class="content-container summary-container">
+    <div class="summary-header">
+        <h1>Review Summary</h1>
+        <p>Please review your answers before final approval</p>
+    </div>
+
+    <div class="summary-list">
+        {% for item in summary_items %}
+        <div class="summary-item">
+            <span class="summary-item-label">
+                <span class="check-icon">&#10003;</span>
+                {{ item.label }}
+            </span>
+            <span class="summary-item-value">{{ item.value }}</span>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="summary-actions">
+        <p>All checklist requirements have been verified. Ready to proceed?</p>
+        <a href="{{ url_for('proceed_review') }}" class="approve-button">
+            <span class="icon">&#10003;</span> Approve &amp; Proceed to Review
+        </a>
+    </div>
+</div>
+{% endblock %}

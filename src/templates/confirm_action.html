@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block extra_styles %}
+.warning-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+.warning-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+.warning-title {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+.warning-message {
+    font-size: 18px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+.warning-step {
+    display: inline-block;
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.action-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.go-back-button {
+    padding: 15px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.go-back-button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+.confirm-reject-button {
+    padding: 15px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.confirm-reject-button:hover {
+    background-color: #da190b;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
+}
+{% endblock %}
+
+{% block content %}
+<div class="content-container centered warning-container">
+    <div class="warning-icon">&#9888;</div>
+    <div class="warning-step">{{ step_label }}</div>
+    <h1 class="warning-title">Are you sure you want to reject?</h1>
+    <p class="warning-message">
+        You answered "No" at the <strong>{{ step_label }}</strong> step.
+        This will mark the submission as rejected and end the review process.
+    </p>
+    <div class="action-buttons">
+        <a href="{{ back_url }}" class="go-back-button">
+            <span class="icon">&larr;</span> Go Back
+        </a>
+        <a href="{{ confirm_url }}" class="confirm-reject-button">
+            <span class="icon">&#10005;</span> Confirm Rejection
+        </a>
+    </div>
+</div>
+{% endblock %}
