@@ -34,11 +34,11 @@ def create_biochar_flowchart() -> str:
     dot.node("selecthyp", "Select\\nmain\\nhypothesis", shape="circle", fillcolor="lightgray")
 
     # Hypothesis nodes
-    dot.node("soilbio", "Soil biology", shape="diamond", fillcolor=ANNEXES["VII"]["color"])
-    dot.node("soilstruct", "Soil structure", shape="diamond", fillcolor=ANNEXES["VI"]["color"])
-    dot.node("soilremed", "Soil\\nremediation", shape="diamond", fillcolor=ANNEXES["V"]["color"])
-    dot.node("ghgs", "GHGs", shape="diamond", fillcolor=ANNEXES["IV"]["color"])
-    dot.node("plantgrowth", "Plant growth", shape="diamond", fillcolor=ANNEXES["III"]["color"])
+    dot.node("soilstruct", "Soil structure\n& hydrology", shape="diamond", fillcolor=ANNEXES["III"]["color"])
+    dot.node("soilbio", "Soil biodiversity\n& ecotoxicology", shape="diamond", fillcolor=ANNEXES["IV"]["color"])
+    dot.node("ghgs", "Soil organic\nmatter & GHGs", shape="diamond", fillcolor=ANNEXES["V"]["color"])
+    dot.node("plantgrowth", "Nutrient cycling\n& crop production", shape="diamond", fillcolor=ANNEXES["VI"]["color"])
+    dot.node("soilremed", "Soil\nremediation", shape="diamond", fillcolor=ANNEXES["VII"]["color"])
 
     # Apply annex nodes
     dot.node("applyvii", "Apply checklist\\nin Annex VII", shape="box", fillcolor=ANNEXES["VII"]["color"])
@@ -68,11 +68,11 @@ def create_biochar_flowchart() -> str:
     dot.edge("selecthyp", "plantgrowth")
 
     # Hypothesis to apply annex
-    dot.edge("soilbio", "applyvii")
-    dot.edge("soilstruct", "applyvi")
-    dot.edge("soilremed", "applyv")
-    dot.edge("ghgs", "applyiv")
-    dot.edge("plantgrowth", "applyiii")
+    dot.edge("soilstruct", "applyiii")
+    dot.edge("soilbio", "applyiv")
+    dot.edge("ghgs", "applyv")
+    dot.edge("plantgrowth", "applyvi")
+    dot.edge("soilremed", "applyvii")
 
     # Apply to check annex
     dot.edge("applyvii", "checkvii")

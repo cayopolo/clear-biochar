@@ -1,19 +1,19 @@
 # Annex information - maps annex ID to hypothesis and color
 ANNEXES = {
-    "VII": {"hypothesis": "Soil Biology", "color": "#FFB3BA"},
-    "VI": {"hypothesis": "Soil Structure", "color": "#BAFFC9"},
-    "V": {"hypothesis": "Soil Remediation", "color": "#BAE1FF"},
-    "IV": {"hypothesis": "GHGs", "color": "#FFFFBA"},
-    "III": {"hypothesis": "Plant Growth", "color": "#FFD9BA"},
+    "III": {"hypothesis": "Soil structure & hydrology", "color": "#FFD9BA"},
+    "IV": {"hypothesis": "Soil biology & ecotoxicology", "color": "#FFFFBA"},
+    "V": {"hypothesis": "Soil organic matter & GHGs", "color": "#BAE1FF"},
+    "VI": {"hypothesis": "Nutrient cycling & crop production", "color": "#BAFFC9"},
+    "VII": {"hypothesis": "Soil remediation", "color": "#FFB3BA"},
 }
 
 # Hypothesis options for selection
 HYPOTHESES = [
-    {"id": "soil-biology", "label": "Soil Biology", "annex": "VII"},
-    {"id": "soil-structure", "label": "Soil Structure", "annex": "VI"},
-    {"id": "soil-remediation", "label": "Soil Remediation", "annex": "V"},
-    {"id": "ghgs", "label": "GHGs", "annex": "IV"},
-    {"id": "plant-growth", "label": "Plant Growth", "annex": "III"},
+    {"id": "soil-structure", "label": "Soil structure & hydrology", "annex": "III"},
+    {"id": "soil-biodiversity", "label": "Soil biology & ecotoxicology", "annex": "IV"},
+    {"id": "ghgs", "label": "Soil organic matter & GHGs", "annex": "V"},
+    {"id": "plant-growth", "label": "Nutrient cycling & crop production", "annex": "VI"},
+    {"id": "soil-remediation", "label": "Soil remediation", "annex": "VII"},
 ]
 
 # Workflow steps for progress tracking
