@@ -1,3 +1,6 @@
+import base64
+from pathlib import Path
+
 import graphviz
 
 from .config import ANNEXES
@@ -5,6 +8,14 @@ from .config import ANNEXES
 
 def create_biochar_flowchart() -> str:
     """Create a Graphviz flowchart showing the biochar MA review workflow"""
+    # TEMPORARY PATCH: Use static PNG image instead of generating flowchart
+    png_path = Path(__file__).parent.parent / "clear-biochar-flowchart.png"
+    if png_path.exists():
+        with png_path.open("rb") as f:
+            img_data = base64.b64encode(f.read()).decode("utf-8")
+            return f'<img src="data:image/png;base64,{img_data}" alt="Biochar MA Review Workflow" style="max-width: 100%;">'
+
+    # OLD CODE (kept for reference):
     dot = graphviz.Digraph(comment="Biochar MA Review Workflow", format="svg")
 
     dot.attr(rankdir="TD", bgcolor="white", splines="ortho")
@@ -82,7 +93,5 @@ def create_biochar_flowchart() -> str:
     dot.edge("checkiii", "proceedreview", label="True")
     dot.edge("checkiii", "reject", label="False")
 
-    # Reject loop
-    dot.edge("reject", "start", style="dashed", color="gray")
-
+    # Fallback: if PNG doesn't exist, generate the flowchart as before
     return dot.pipe(encoding="utf-8")
