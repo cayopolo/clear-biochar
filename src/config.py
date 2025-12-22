@@ -1,7 +1,7 @@
 # Annex information - maps annex ID to hypothesis and color
 ANNEXES = {
     "III": {"hypothesis": "Soil structure & hydrology", "color": "#FFD9BA"},
-    "IV": {"hypothesis": "Soil biology & ecotoxicology", "color": "#FFFFBA"},
+    "IV": {"hypothesis": "Soil biodiversity & ecotoxicology", "color": "#FFFFBA"},
     "V": {"hypothesis": "Soil organic matter & GHGs", "color": "#BAE1FF"},
     "VI": {"hypothesis": "Nutrient cycling & crop production", "color": "#BAFFC9"},
     "VII": {"hypothesis": "Soil remediation", "color": "#FFB3BA"},
@@ -10,7 +10,7 @@ ANNEXES = {
 # Hypothesis options for selection
 HYPOTHESES = [
     {"id": "soil-structure", "label": "Soil structure & hydrology", "annex": "III"},
-    {"id": "soil-biodiversity", "label": "Soil biology & ecotoxicology", "annex": "IV"},
+    {"id": "soil-biodiversity", "label": "Soil biodiversity & ecotoxicology", "annex": "IV"},
     {"id": "ghgs", "label": "Soil organic matter & GHGs", "annex": "V"},
     {"id": "plant-growth", "label": "Nutrient cycling & crop production", "annex": "VI"},
     {"id": "soil-remediation", "label": "Soil remediation", "annex": "VII"},
