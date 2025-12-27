@@ -120,7 +120,7 @@ def init_app(app: Flask) -> None:
         table_data, column_names = load_annex_table("II")
         return render_template(
             "annex_check.html",
-            title="Annex II Check - Biochar MA Review",
+            title=ANNEXES["II"]["title"],
             question="Is the Annex II basic checklist complete?",
             yes_url=url_for("record_yes", step="annex-ii-check", next_route="select_hypothesis"),
             no_url=url_for("confirm_reject", from_step="annex-ii-check"),
@@ -151,7 +151,7 @@ def init_app(app: Flask) -> None:
         annex_info = ANNEXES[annex_id]
         return render_template(
             "annex.html",
-            title=f"Apply Annex {annex_id} - Biochar MA Review",
+            title=annex_info["title"],
             annex_id=annex_id,
             hypothesis=annex_info["hypothesis"],
             color=annex_info["color"],
@@ -168,7 +168,7 @@ def init_app(app: Flask) -> None:
         table_data, column_names = load_annex_table(annex_id)
         return render_template(
             "annex_check.html",
-            title=f"Annex {annex_id} Check - Biochar MA Review",
+            title=ANNEXES[annex_id]["title"],
             question=f"Is the Annex {annex_id} checklist complete?",
             yes_url=url_for("record_yes", step="verify-annex", next_route="summary"),
             no_url=url_for("confirm_reject", from_step="verify-annex"),

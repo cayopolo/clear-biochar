@@ -12,6 +12,122 @@
     text-align: center;
     margin-bottom: 20px;
 }
+
+/* Soil/environmental auxiliary variables - light shading */
+tr.soil-row {
+    background-color: #f0f4f0;
+}
+tr.soil-row:hover {
+    background-color: #e4ebe4 !important;
+}
+tr.soil-row.checked {
+    background-color: #d4edda !important;
+}
+tr.soil-row.checked:hover {
+    background-color: #c3e6cb !important;
+}
+
+/* Biochar auxiliary variables - dark shading */
+tr.biochar-row {
+    background-color: #d0d8d0;
+}
+tr.biochar-row:hover {
+    background-color: #c0c8c0 !important;
+}
+tr.biochar-row.checked {
+    background-color: #a8d5a2 !important;
+}
+tr.biochar-row.checked:hover {
+    background-color: #98c592 !important;
+}
+
+/* Checkbox styling */
+.checkbox-cell {
+    text-align: center;
+    width: 50px;
+}
+.checkbox-cell input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #2c5f2d;
+}
+
+/* Priority badge styling */
+.priority-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+.priority-badge.essential {
+    background-color: #dc3545;
+    color: white;
+}
+.priority-badge.desirable {
+    background-color: #6c757d;
+    color: white;
+}
+.priority-badge.mixed {
+    background: linear-gradient(45deg, #dc3545 50%, #6c757d 50%);
+    color: white;
+}
+
+/* Progress indicator */
+.progress-indicator {
+    text-align: center;
+    margin: 15px 0;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    font-size: 14px;
+}
+.progress-indicator.complete {
+    background-color: #d4edda;
+    color: #155724;
+}
+.progress-indicator strong {
+    color: #dc3545;
+}
+.progress-indicator.complete strong {
+    color: #155724;
+}
+
+/* Disabled button styling */
+.yes-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: #ccc !important;
+}
+
+/* Legend */
+.legend {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+.legend-color.soil {
+    background-color: #f0f4f0;
+}
+.legend-color.biochar {
+    background-color: #d0d8d0;
+}
 {% endblock %}
 
 {% block content %}
@@ -24,22 +140,83 @@
     </div>
     {% endif %}
 
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color soil"></div>
+            <span>Soil &amp; environmental auxiliary variables</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color biochar"></div>
+            <span>Biochar auxiliary variables</span>
+        </div>
+        <div class="legend-item">
+            <span class="priority-badge essential">E</span>
+            <span>Essential - Must be checked to proceed</span>
+        </div>
+        <div class="legend-item">
+            <span class="priority-badge desirable">D</span>
+            <span>Desirable - Optional</span>
+        </div>
+        <div class="legend-item">
+            <span class="priority-badge mixed">E/D</span>
+            <span>Context-dependent - Essential under certain conditions</span>
+        </div>
+    </div>
+
+    <div class="progress-indicator" id="progress-indicator">
+        <span id="progress-text">Checked <strong>0</strong> of <strong id="total-essential">0</strong> essential items</span>
+    </div>
+
     <div class="table-wrapper">
-        <table>
+        <table id="annex-table">
             <thead>
                 <tr>
+                    <th style="width: 50px;">✓</th>
                     {% for col in column_names %}
+                    {% if col != 'Y/N' %}
                     <th>{{ col }}</th>
+                    {% endif %}
                     {% endfor %}
                 </tr>
             </thead>
             <tbody>
                 {% for row in table_data %}
-                <tr>
+                {% set ed_value = row['E/D']|default('') %}
+                {% set is_essential = ed_value == 'E' %}
+                {% set is_desirable = 'D' in ed_value %}
+                {% set is_mixed = ed_value == 'E/D' %}
+                {# Get the variable name from the 3rd column (first data column after Y/N and E/D) #}
+                {% set var_name = row[column_names[2]]|default('')|lower %}
+                {% set is_biochar = 'biochar' in var_name or 'pyrolysis' in var_name %}
+                {% set row_class = 'biochar-row' if is_biochar else 'soil-row' %}
+                {% if ed_value in ['E', 'D', 'E/D'] %}
+                <tr class="{{ row_class }}" data-essential="{{ 'true' if is_essential else 'false' }}">
+                    <td class="checkbox-cell">
+                        <input type="checkbox"
+                               class="row-checkbox {% if is_essential %}essential-checkbox{% endif %}"
+                               aria-label="Mark as complete">
+                    </td>
                     {% for col in column_names %}
-                    <td>{{ row[col] }}</td>
+                    {% if col != 'Y/N' %}
+                    <td>
+                        {% if col == 'E/D' %}
+                        {% if is_mixed %}
+                        <span class="priority-badge mixed">
+                            E/D
+                        </span>
+                        {% else %}
+                        <span class="priority-badge {{ 'essential' if is_essential else 'desirable' }}">
+                            {{ ed_value }}
+                        </span>
+                        {% endif %}
+                        {% else %}
+                        {{ row[col] }}
+                        {% endif %}
+                    </td>
+                    {% endif %}
                     {% endfor %}
                 </tr>
+                {% endif %}
                 {% endfor %}
             </tbody>
         </table>
@@ -48,7 +225,7 @@
     <div class="question-section">
         <p class="question-text">{{ question }}</p>
         <div class="button-container">
-            <a href="{{ yes_url }}" class="answer-button yes-button">
+            <a href="{{ yes_url }}" class="answer-button yes-button disabled" id="yes-button">
                 <span class="icon">&#10003;</span> Yes
             </a>
             <a href="{{ no_url }}" class="answer-button no-button">
@@ -57,4 +234,82 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const essentialCheckboxes = document.querySelectorAll('.essential-checkbox');
+    const allCheckboxes = document.querySelectorAll('.row-checkbox');
+    const yesButton = document.getElementById('yes-button');
+    const progressIndicator = document.getElementById('progress-indicator');
+    const progressText = document.getElementById('progress-text');
+    const totalEssentialSpan = document.getElementById('total-essential');
+
+    const totalEssential = essentialCheckboxes.length;
+    totalEssentialSpan.textContent = totalEssential;
+
+    function updateProgress() {
+        const checkedEssential = document.querySelectorAll('.essential-checkbox:checked').length;
+        const allEssentialChecked = checkedEssential === totalEssential;
+
+        // Update progress text
+        progressText.innerHTML = `Checked <strong>${checkedEssential}</strong> of <strong>${totalEssential}</strong> essential items`;
+
+        // Update progress indicator style
+        if (allEssentialChecked) {
+            progressIndicator.classList.add('complete');
+            progressText.innerHTML += ' ✓';
+        } else {
+            progressIndicator.classList.remove('complete');
+        }
+
+        // Enable/disable Yes button
+        if (allEssentialChecked) {
+            yesButton.classList.remove('disabled');
+            yesButton.style.pointerEvents = 'auto';
+        } else {
+            yesButton.classList.add('disabled');
+            yesButton.style.pointerEvents = 'none';
+        }
+    }
+
+    // Add click handlers to checkboxes
+    allCheckboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            const row = this.closest('tr');
+            if (this.checked) {
+                row.classList.add('checked');
+            } else {
+                row.classList.remove('checked');
+            }
+            updateProgress();
+        });
+    });
+
+    // Make entire row clickable to toggle checkbox
+    document.querySelectorAll('#annex-table tbody tr').forEach(function(row) {
+        row.style.cursor = 'pointer';
+        row.addEventListener('click', function(e) {
+            // Don't toggle if clicking directly on checkbox
+            if (e.target.type === 'checkbox') return;
+
+            const checkbox = this.querySelector('.row-checkbox');
+            if (checkbox) {
+                checkbox.checked = !checkbox.checked;
+                checkbox.dispatchEvent(new Event('change'));
+            }
+        });
+    });
+
+    // Prevent Yes button click when disabled
+    yesButton.addEventListener('click', function(e) {
+        if (this.classList.contains('disabled')) {
+            e.preventDefault();
+            alert('Please check all essential (E) items before proceeding.');
+        }
+    });
+
+    // Initial update
+    updateProgress();
+});
+</script>
 {% endblock %}
