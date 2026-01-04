@@ -102,6 +102,74 @@ tr.biochar-row.checked:hover {
     background-color: #ccc !important;
 }
 
+/* Gating question styling */
+.gating-question-section {
+    background-color: #f8f9fa;
+    border: 2px solid #dc3545;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+.gating-question-section h2 {
+    margin-top: 0;
+    color: #000000;
+    margin-bottom: 15px;
+}
+.gating-question-section .question-text {
+    margin: 10px 0;
+    font-size: 16px;
+}
+.gating-question-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    justify-content: center;
+}
+.gating-question-buttons button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+.gating-question-buttons .yes-gating {
+    background-color: #dc3545;
+    color: white;
+}
+.gating-question-buttons .yes-gating:hover {
+    background-color: #c82333;
+}
+.gating-question-buttons .no-gating {
+    background-color: #6c757d;
+    color: white;
+}
+.gating-question-buttons .no-gating:hover {
+    background-color: #5a6268;
+}
+.gating-answer-indicator {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    display: none;
+}
+.gating-answer-indicator.micronutrient-limiting {
+    background-color: #dc3545;
+    color: white;
+    border: 1px solid #c82333;
+}
+.gating-answer-indicator.micronutrient-not-limiting {
+    background-color: #6c757d;
+    color: white;
+    border: 1px solid #5a6268;
+}
+
 /* Legend */
 .legend {
     display: flex;
@@ -137,6 +205,25 @@ tr.biochar-row.checked:hover {
     {% if instructions %}
     <div class="instructions">
         <p>{{ instructions }}</p>
+    </div>
+    {% endif %}
+
+    {# Gating question for conditional E/D items #}
+    {% set ns = namespace(has_conditional_items=false) %}
+    {% for row in table_data %}
+        {% if row.get('E/D', '') == 'E/D' and 'Essential if' in row.get('Notes', '') %}
+            {% set ns.has_conditional_items = true %}
+        {% endif %}
+    {% endfor %}
+
+    {% if ns.has_conditional_items %}
+    <div class="gating-question-section" id="gating-question-section">
+        <p class="question-text">Regarding your research question, is there a known response limitation due to <strong>micronutrient availability</strong>?</p>
+        <div class="gating-question-buttons">
+            <button type="button" class="yes-gating" id="gating-yes">Yes - micronutrient limitation expected</button>
+            <button type="button" class="no-gating" id="gating-no">No - micronutrient limitation not expected</button>
+        </div>
+        <div class="gating-answer-indicator" id="gating-answer-indicator"></div>
     </div>
     {% endif %}
 
@@ -185,15 +272,16 @@ tr.biochar-row.checked:hover {
                 {% set is_essential = ed_value == 'E' %}
                 {% set is_desirable = 'D' in ed_value %}
                 {% set is_mixed = ed_value == 'E/D' %}
+                {% set has_condition = 'Essential if' in row.get('Notes', '') %}
                 {# Get the variable name from the 3rd column (first data column after Y/N and E/D) #}
                 {% set var_name = row[column_names[2]]|default('')|lower %}
                 {% set is_biochar = 'biochar' in var_name or 'pyrolysis' in var_name %}
                 {% set row_class = 'biochar-row' if is_biochar else 'soil-row' %}
                 {% if ed_value in ['E', 'D', 'E/D'] %}
-                <tr class="{{ row_class }}" data-essential="{{ 'true' if is_essential else 'false' }}">
+                <tr class="{{ row_class }}" data-essential="{{ 'true' if is_essential else 'false' }}" {% if is_mixed and has_condition %}data-conditional="true" data-conditional-type="micronutrient"{% endif %}>
                     <td class="checkbox-cell">
                         <input type="checkbox"
-                               class="row-checkbox {% if is_essential %}essential-checkbox{% endif %}"
+                               class="row-checkbox {% if is_essential %}essential-checkbox{% endif %}{% if is_mixed and has_condition %} conditional-checkbox{% endif %}"
                                aria-label="Mark as complete">
                     </td>
                     {% for col in column_names %}
@@ -237,33 +325,53 @@ tr.biochar-row.checked:hover {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const essentialCheckboxes = document.querySelectorAll('.essential-checkbox');
     const allCheckboxes = document.querySelectorAll('.row-checkbox');
     const yesButton = document.getElementById('yes-button');
     const progressIndicator = document.getElementById('progress-indicator');
     const progressText = document.getElementById('progress-text');
     const totalEssentialSpan = document.getElementById('total-essential');
 
-    const totalEssential = essentialCheckboxes.length;
-    totalEssentialSpan.textContent = totalEssential;
+    // Gating question elements
+    const gatingSection = document.getElementById('gating-question-section');
+    const gatingYesBtn = document.getElementById('gating-yes');
+    const gatingNoBtn = document.getElementById('gating-no');
+    const gatingIndicator = document.getElementById('gating-answer-indicator');
+
+    // Track gating question answer
+    let gatingAnswer = null;
+
+    function getEssentialCheckboxes() {
+        return document.querySelectorAll('.essential-checkbox');
+    }
+
+    function updateEssentialCheckboxCount() {
+        const totalEssential = getEssentialCheckboxes().length;
+        totalEssentialSpan.textContent = totalEssential;
+        return totalEssential;
+    }
 
     function updateProgress() {
+        const essentialCheckboxes = getEssentialCheckboxes();
+        const totalEssential = essentialCheckboxes.length;
         const checkedEssential = document.querySelectorAll('.essential-checkbox:checked').length;
         const allEssentialChecked = checkedEssential === totalEssential;
+
+        // Check if gating question exists and has been answered
+        const gatingAnswered = !gatingSection || gatingAnswer !== null;
 
         // Update progress text
         progressText.innerHTML = `Checked <strong>${checkedEssential}</strong> of <strong>${totalEssential}</strong> essential items`;
 
         // Update progress indicator style
-        if (allEssentialChecked) {
+        if (allEssentialChecked && gatingAnswered) {
             progressIndicator.classList.add('complete');
             progressText.innerHTML += ' ✓';
         } else {
             progressIndicator.classList.remove('complete');
         }
 
-        // Enable/disable Yes button
-        if (allEssentialChecked) {
+        // Enable/disable Yes button - require BOTH gating answer AND all essential items checked
+        if (allEssentialChecked && gatingAnswered) {
             yesButton.classList.remove('disabled');
             yesButton.style.pointerEvents = 'auto';
         } else {
@@ -271,6 +379,60 @@ document.addEventListener('DOMContentLoaded', function() {
             yesButton.style.pointerEvents = 'none';
         }
     }
+
+    // Handle gating question answer
+    function handleGatingAnswer(answer) {
+        gatingAnswer = answer;
+        const conditionalCheckboxes = document.querySelectorAll('.conditional-checkbox');
+
+        if (answer === 'yes') {
+            // Micronutrient limitation expected - make E/D items Essential
+            conditionalCheckboxes.forEach(checkbox => {
+                if (!checkbox.classList.contains('essential-checkbox')) {
+                    checkbox.classList.add('essential-checkbox');
+                }
+            });
+            gatingIndicator.textContent = '"Biochar available micronutrients" variable is now ESSENTIAL';
+            gatingIndicator.classList.remove('micronutrient-not-limiting');
+            gatingIndicator.classList.add('micronutrient-limiting');
+        } else {
+            // No limitation expected - keep E/D items as Desirable
+            conditionalCheckboxes.forEach(checkbox => {
+                checkbox.classList.remove('essential-checkbox');
+            });
+            gatingIndicator.textContent = '"Biochar available micronutrients" variable is OPTIONAL';
+            gatingIndicator.classList.remove('micronutrient-limiting');
+            gatingIndicator.classList.add('micronutrient-not-limiting');
+        }
+
+        gatingIndicator.style.display = 'block';
+        updateEssentialCheckboxCount();
+        updateProgress();
+    }
+
+    // Gating question event listeners
+    if (gatingYesBtn) {
+        gatingYesBtn.addEventListener('click', function() {
+            handleGatingAnswer('yes');
+            gatingYesBtn.disabled = true;
+            gatingNoBtn.disabled = true;
+            gatingYesBtn.style.opacity = '0.7';
+            gatingNoBtn.style.opacity = '0.7';
+        });
+    }
+
+    if (gatingNoBtn) {
+        gatingNoBtn.addEventListener('click', function() {
+            handleGatingAnswer('no');
+            gatingYesBtn.disabled = true;
+            gatingNoBtn.disabled = true;
+            gatingYesBtn.style.opacity = '0.7';
+            gatingNoBtn.style.opacity = '0.7';
+        });
+    }
+
+    // Initialise essential checkbox count
+    updateEssentialCheckboxCount();
 
     // Add click handlers to checkboxes
     allCheckboxes.forEach(function(checkbox) {
@@ -304,7 +466,13 @@ document.addEventListener('DOMContentLoaded', function() {
     yesButton.addEventListener('click', function(e) {
         if (this.classList.contains('disabled')) {
             e.preventDefault();
-            alert('Please check all essential (E) items before proceeding.');
+
+            // Check if gating question needs to be answered
+            if (gatingSection && gatingAnswer === null) {
+                alert('Please answer the conditional requirement question before proceeding.');
+            } else {
+                alert('Please check all essential (E) items before proceeding.');
+            }
         }
     });
 

@@ -80,7 +80,8 @@ def load_annex_table(annex_id: str) -> tuple[list[dict], list[str]]:
         for row in reader:
             cleaned_row = {}
             for old_key, new_key in zip(original_headers, cleaned_headers, strict=True):
-                value = row.get(old_key, "").replace("\xa0", "").replace("\u202f", "").strip()
+                value = row.get(old_key) or ""
+                value = value.replace("\xa0", "").replace("\u202f", "").strip()
                 cleaned_row[new_key] = value
             rows.append(cleaned_row)
 
