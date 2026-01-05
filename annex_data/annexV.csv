@@ -1,1 +1,17 @@
-﻿Y/N,E/D,SOM and GHG,Preferred Units,Secondary Units,Notes,
+﻿Y/N,E/D,SOM and GHG,Preferred Units,Secondary Units,Notes
+,E,Microbial biomass carbon,(mg biomass C) (kg oven-dry soil)-1,,
+,E,Soil respiration rate,(g CO2) m-2 y-1,(μmol CO2) m-2 s-1,
+,E,CH4 flux,(mg CH4) m-2 y-1,(μmol CH4) m-2 s-1,
+,E,N2O flux,(mg N2O) m-2 y-1,(μmol N2O) m-2 s-1,
+,E,Water-filled pore space,%,Volumetric moisture content (%) ,Requires soil porosity and SMC
+,E,Fertilizer (if used; quantity),kg ha-1,,
+,E,Fertilizer (if used; type),,,
+,E,Land Use History,"Pasture, crop, fallow",Specific crop,
+,E,Soil porosity,%,,
+,E,SMC,% (v v-1),,volumetric
+,D,Belowground plant biomass,(g dry weight biomass) cm-2,(Mg dry weight biomass) ha-1,
+,D,Soil erosion rate,kg m-2 y-1,t ha-1 y-1,
+,E,Biochar volatile content,%,g g-1,
+,E,Biochar porosity,%,,
+,D,Biochar surface area,m2 g-1,,
+,,,,,

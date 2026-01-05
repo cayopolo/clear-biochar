@@ -1,1 +1,18 @@
-﻿Y/N,E/D,Soil biodiversity & ecotoxicology ,Preferred Units,Secondary Units,Notes
+﻿Y/N,E/D,Soil biodiversity and ecotoxicology ,Preferred Units,Secondary Units,Notes
+,E,Aboveground biomass,(g dry weight biomass) cm-2,(Mg dry weight biomass) ha-1,
+,E,Plant water content,%,,
+,E,Growth rate animals,(µg change in mass) time-1,(mm change in size) time-1,
+,E,Growth rate plants,(change in height) cm,,
+,E,Reproductive rate,(number of offspring) individual-1 time-1,,
+,E,Mortality rate,deaths time-1,,
+,D,Community Composition,Proportion of each taxon (%),Presence/absence of taxa,"plant, microbial and invertebrates"
+,D,Species richness,Number of Species,"Diversity indices (Shannon, Simpsons, etc.)",both plant and invertebrates
+,D,Abundance,Individuals (g oven-dry soil)-1,individuals per volume of soil,both plant and invertebrates
+,D,Egg/cocoon counts,(number eggs or cocoons) area-1,(volume eggs) m-2 or eggs cm-3,
+,D,Belowground plant biomass,(g dry weight biomass) cm-2,(Mg dry weight biomass) ha-1,
+,D,Invertebrate avoidance/preference behavior,Mean %,,
+,D,Functional diversity,% (of functional groupings),,
+,D,Feeding rate,(mg dry matter consumed) (g organism)-1 day-1,(mg dry matter consumed) individual-1 day-1,
+,D,enzymatic activity,(µmol product) min-1 g-1 soil,,"dehydrogenase, glycosidase and phosphatase"
+,E,Biochar volatile content,%,g g-1,
+,,,,,

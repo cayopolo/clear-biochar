@@ -1,1 +1,24 @@
-﻿Y/N ,E/D ,Universal Variables ,Preferred Units ,Secondary units ,Notes
+﻿Y/N,E/D,Universal Variables,Preferred Units,Secondary units,Notes
+,E,Soil texture,"% clay, silt, sand",Texture class (FAO), 
+,E,Soil dry bulk density post application,kg dm-3,g cm-3, 
+,E,Soil pH post application,pH units, ,Measured at least 2 weeks after application when the pH has stabilized
+,E,Soil EC post application,dS m–1,,
+,E,Soil organic carbon/ matter,% SOC,% SOM,
+,E,Biochar application depth,cm, , 
+,E,Biochar application rate,% m m-1,t ha-1,Calculated from bulk density and application depth
+,E,Biochar pyrolysis T (max),°C, °K, 
+,E,Biochar heating rate,°C minute-1,hours, 
+,E,Biochar pH,pH units, ,Report how it was measured (ratio and whether with H2O or CaCl2)
+,E,Pyrolysis type,Continuous or batch, , 
+,E,Biochar feedstock,Specific type,"Wood, herbaceous, manure etc.", 
+,E,Biochar carbon,% (m m-1), , 
+,E,Biochar H:Corg,ratio, , 
+,E,Biochar ash content,% (m m-1), ,gravimetric
+,E,Biochar particle size distribution,">2 cm, 2-0.2 cm, 2mm-200 μm, 200-53 μm, 53 μm-20μm, <20 μm", , 
+,D,Biochar porosity,%, , 
+,D,Biochar pore size distribution,"% micropores (<2 nm), mesopores (2–50 nm), and macropores (>50 nm)", , 
+,D,Biochar specific surface area,m2 g-1, , 
+,D,Biochar volatile content,%,g g-1, 
+,D,Biochar O:C,ratio,,
+,D,Biochar EC,dS m–1, ,Report how it was measured (ratio and type of H2O used)
+,,,,,

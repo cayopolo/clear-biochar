@@ -1,1 +1,21 @@
 ﻿Y/N,E/D,Nutrient Cycling and Crop Production,Preferred Units,Secondary Units,Notes
+,E,Soil Potentially Mineralizable Nitrogen (PMN),(mg N) (kg soil)-1,,
+,E,"PAW (Permanent wilting point, field capacity) θfc - θpwp",% (v v-1),% m m-1,
+,E,Soil moisture contents (continuous reading at different depths),% (v v-1),,
+,E,"Soil available N, P, K, Mg, Ca (post application)",mg kg-1,,State how long post application measured
+,E,Soil CEC,cmol(+) kg-1,,
+,E,"Available Al, Mn, Fe",mg kg-1,mg kg-1 or cmol(+) kg-1,
+,E,Aboveground Biomass,(g dry weight biomass) m-2,(Mg dry weight biomass) ha-1,
+,D,Base saturation,%,,
+,D,"Available S, Cu, Zn, B, Mo, Ni",mg kg-1,,
+,D,Belowground plant biomass,(g dry weight biomass) cm-3,(Mg dry weight biomass) ha-1,
+,E,Biochar available N,% m m-1,,
+,E,Biochar available K,% m m-1,,
+,E,Biochar available P,% m m-1,,
+,E,Biochar available Ca and Mg,mg kg-1,,
+,E,Biochar CEC,cmol(+) kg-1,meq (100 g)-1,
+,E/D,Biochar available micronutrients,mg kg-1,,"Essential if evidence that one is limiting, otherwise Desirable"
+,D,Biochar available N,mg kg-1,,
+,D,Biochar available K,mg kg-1,,
+,D,Biochar available P,mg kg-1,,
+,,,,,

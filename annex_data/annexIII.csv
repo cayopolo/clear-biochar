@@ -1,1 +1,20 @@
 ﻿Y/N,E/D,Soil Structure and Hydrology,Preferred Units,Secondary Units,Notes
+,E,Soil aggregate stability post application,Water stable aggregates (%),STAB10 or MWD,
+,E,Potential soil water repellency,s (water drop penetration time),R (repellence index based on molarity of ethanol or contact angle test),after oven drying soil at 105°C for 24 hours
+,E,Unsaturated hydraulic conductivity post application,mm h-1,,Indicate if sample is disturbed or undisturbed
+,E,"PAW (Permanent wilting point, field capacity) θfc - θpwp",% (volumetric),,Plant-available water. On undisturbed samples.
+,E,Slope angle,°,%,
+,E,Surface roughness,mm,ratio,
+,D,Aspect,°,N-S-E-W,
+,D,Soil stoniness,% v v-1,% m/m,
+,D,Soil (un)saturated hydraulic conductivity,mm h-1,,
+,D,Soil porosity post application,%,,
+,D,Rainfall volume,mm,,
+,D,Rainfall intensity,ml h-1,,
+,D,pF Curves - Soil available Water Capacity,% (v v-1),% mass,
+,D,Soil moisture contents (continuous reading at different depths),% (v v-1),,
+,D,SAR or ESP,ratio or %,,
+,E,Potential biochar water repellency,°,,contact angle
+,D,Biochar specific surface area,m2 g-1,,
+,D,Biochar porosity,%,,
+,,,,,
