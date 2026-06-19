@@ -1,18 +1,17 @@
-﻿Y/N,E/D,Soil Remediation,Preferred Units,Secondary Units,Notes
-,E,Soil moisture content,% v v-1,% m m-1,
+Y/N,E/D,Soil Remediation,Preferred Units,Secondary Units,Notes
 ,E,Crop management/pesticide usage/fertilization,Type and ml ha-1,,For current and ideally previous crop
 ,E,Contaminant/pollutant concentration at start of experiment,(mg contaminant or pollutant) (kg oven-dry soil)-1,,
 ,E,Contaminant/pollutant concentration at end of experiment,(mg contaminant or pollutant) (kg oven-dry soil)-1,,
 ,E,Type of contaminant/pollutant,Organic or Inorganic,,
-,E,Monitoring of contaminant/pollutant bioavailability,Effect-based approaches,,"Impact on plant, invertebrate, microbial or enzymatic parameters "
+,D,Monitoring of contaminant/pollutant bioavailability,Effect-based approaches,,"Impact on plant, invertebrate, microbial or enzymatic parameters"
 ,D,Soil vegetation cover,NDVI,Leaf area index,
 ,D,Soil porosity,%,,
 ,D,Soil management,Tillage type,Other factors of note,
 ,D,Soil (un)saturated hydraulic conductivity,mm h-1,,
-,D,contaminant/pollutant concentration in leachates or runoff,mg ,,
+,D,contaminant/pollutant concentration in leachates or runoff,mg,,
 ,E,Biochar heavy metals,Type and mg kg-1,,
 ,E,Biochar PAHs,Type and µl kg-1,,sum of EPAs 16 priority PAHs
 ,E,Biochar ageing,Method of ageing,Duration of ageing,Method of ageing is desirable
 ,D,Biochar porosity,%,,
 ,D,Biochar surface area,m2 g-1,,
-,,,,,
+,D,Biochar volatile content,%,g g-1,
